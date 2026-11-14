@@ -77,7 +77,19 @@ fl_site_approval_gate <- R6::R6Class(
       )
       issued_at <- format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
       site_id <- as.character(manifest$site_id %||% "SITE_DEFAULT")
-      sig_payload <- paste(receipt_id, site_id, digest, user_id, issued_at, sep = "|")
+      eps_str <- if (is.null(dp_epsilon)) "NULL" else sprintf("%.12g", as.numeric(dp_epsilon))
+      del_str <- if (is.null(dp_delta)) "NULL" else sprintf("%.12g", as.numeric(dp_delta))
+      sig_payload <- paste(
+        receipt_id,
+        site_id,
+        digest,
+        user_id,
+        issued_at,
+        as.integer(min_cell_count),
+        eps_str,
+        del_str,
+        sep = "|"
+      )
       signature <- unclass(as.character(
         openssl::sha256(charToRaw(sig_payload), key = charToRaw(private$gate_secret))
       ))
@@ -113,16 +125,24 @@ fl_site_approval_gate <- R6::R6Class(
       if (!identical(receipt$role, "site_admin")) {
         rlang::abort("Receipt role is not 'site_admin'.", class = "dicomtk_fl_unauthorized_export_error")
       }
+      if (is.null(receipt$min_cell_count) || as.integer(receipt$min_cell_count) < self$k_min) {
+        rlang::abort("Receipt minimum cell count is below k_min.", class = "dicomtk_fl_small_cell_error")
+      }
       digest <- self$manifest_digest(manifest)
       if (!identical(receipt$manifest_digest, digest)) {
         rlang::abort("Manifest digest does not match signed approval receipt.", class = "dicomtk_fl_unauthorized_export_error")
       }
+      eps_str <- if (is.null(receipt$dp_epsilon)) "NULL" else sprintf("%.12g", as.numeric(receipt$dp_epsilon))
+      del_str <- if (is.null(receipt$dp_delta)) "NULL" else sprintf("%.12g", as.numeric(receipt$dp_delta))
       sig_payload <- paste(
         receipt$receipt_id,
         receipt$site_id,
         digest,
         receipt$approved_by,
         receipt$issued_at,
+        as.integer(receipt$min_cell_count),
+        eps_str,
+        del_str,
         sep = "|"
       )
       expected_sig <- unclass(as.character(

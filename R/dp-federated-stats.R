@@ -218,6 +218,22 @@ dp_federated_summary <- function(x,
   if (!is.numeric(lower) || !is.numeric(upper) || upper <= lower) {
     rlang::abort("`upper` must be strictly greater than `lower`.", class = "dicomtk_fl_dp_error")
   }
+  if (!is.numeric(epsilon) || length(epsilon) != 1L || epsilon <= 0 ||
+      !is.numeric(delta) || length(delta) != 1L || delta <= 0 || delta >= 1) {
+    rlang::abort("`epsilon` must be > 0 and `delta` in (0, 1).", class = "dicomtk_fl_dp_error")
+  }
+  if (!is.null(accountant)) {
+    rem <- accountant$remaining()
+    if (epsilon > rem$epsilon + 1e-12 || delta > rem$delta + 1e-15) {
+      rlang::abort(
+        sprintf(
+          "DP budget exceeded for site summary '%s': requested (eps=%.4g, delta=%.2e), remaining (eps=%.4g, delta=%.2e).",
+          site_id, epsilon, delta, rem$epsilon, rem$delta
+        ),
+        class = "dicomtk_fl_dp_budget_exceeded_error"
+      )
+    }
+  }
 
   x_clip <- pmin(pmax(x, lower), upper)
   eps_count <- 0.3 * epsilon

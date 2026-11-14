@@ -211,7 +211,12 @@ pep_derive_site_token <- function(master_pseudonym,
 
   aes_key <- .pep_derive_aes_key(pep_key)
   iv <- openssl::rand_bytes(12L)
-  ctx_prefix <- paste0(project_id, "|", site_id, "|", context_salt, "|")
+  ctx_prefix <- paste0(
+    "PEP-ENV|",
+    nchar(project_id), ":", project_id, "|",
+    nchar(site_id), ":", site_id, "|",
+    nchar(context_salt), ":", context_salt, "|"
+  )
   ct <- openssl::aes_gcm_encrypt(
     data = charToRaw(paste0(ctx_prefix, master_pseudonym)),
     key = aes_key,
@@ -271,7 +276,12 @@ pep_rekey_pseudonym <- function(token,
     }
   )
   plain_str <- rawToChar(plain_raw)
-  expected_prefix <- paste0(token$project_id, "|", token$site_id, "|", token$context_salt, "|")
+  expected_prefix <- paste0(
+    "PEP-ENV|",
+    nchar(token$project_id), ":", token$project_id, "|",
+    nchar(token$site_id), ":", token$site_id, "|",
+    nchar(token$context_salt), ":", token$context_salt, "|"
+  )
   if (!startsWith(plain_str, expected_prefix)) {
     rlang::abort("PEP envelope context mismatch.", class = "dicomtk_fl_pep_error")
   }

@@ -44,6 +44,13 @@ test_that("fl_site_approval_gate blocks all non-site_admin roles and tampered ma
     gate$verify_receipt(receipt, tampered_manifest),
     class = "dicomtk_fl_unauthorized_export_error"
   )
+
+  tampered_receipt <- receipt
+  tampered_receipt$dp_epsilon <- 100.0
+  expect_error(
+    gate$verify_receipt(tampered_receipt, manifest),
+    class = "dicomtk_fl_unauthorized_export_error"
+  )
 })
 
 test_that("fl_export_site_package generates Flower, NVFlare, and OpenFL bundles only with valid approval", {

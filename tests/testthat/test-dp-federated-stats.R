@@ -36,6 +36,12 @@ test_that("dp_federated_summary rejects small cohorts and clips sensitivity boun
   s2 <- dp_federated_summary(x2, lower = 0, upper = 100, epsilon = 1.0, delta = 1e-6, accountant = acc, site_id = "SITE_2")
 
   expect_equal(acc$remaining()$epsilon, 1.0, tolerance = 1e-12)
+  # Atomic budget pre-check: requesting epsilon=1.5 when 1.0 remains must not partially debit 0.3*1.5
+  expect_error(
+    dp_federated_summary(x1, lower = 0, upper = 100, epsilon = 1.5, delta = 1e-6, accountant = acc, site_id = "SITE_3"),
+    class = "dicomtk_fl_dp_budget_exceeded_error"
+  )
+  expect_equal(acc$remaining()$epsilon, 1.0, tolerance = 1e-12)
   agg <- dp_aggregate_sites(list(s1, s2))
   expect_equal(agg$total_count, 450, tolerance = 25)
   expect_equal(agg$weighted_mean, mean(c(x1, x2)), tolerance = 3.0)

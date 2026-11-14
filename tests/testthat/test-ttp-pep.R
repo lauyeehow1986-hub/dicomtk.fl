@@ -45,6 +45,16 @@ test_that("pep_rekey_pseudonym re-keys across projects without exposing master p
     pep_rekey_pseudonym(tok_a1, target_project_id = "PROJ_B", target_site_id = "SITE_2", pep_key = "wrong-key"),
     class = "dicomtk_fl_pep_error"
   )
+
+  # Boundary-shifting delimiter attack must be rejected by length-prefixed envelope
+  tok_delim <- pep_derive_site_token("TTP-0001", project_id = "A|B", site_id = "C", pep_key = key)
+  tok_shifted <- tok_delim
+  tok_shifted$project_id <- "A"
+  tok_shifted$site_id <- "B|C"
+  expect_error(
+    pep_rekey_pseudonym(tok_shifted, target_project_id = "PROJ_B", target_site_id = "SITE_2", pep_key = key),
+    class = "dicomtk_fl_pep_error"
+  )
 })
 
 test_that("PEP functions reject empty or invalid inputs", {
