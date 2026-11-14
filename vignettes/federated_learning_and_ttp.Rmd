@@ -1,0 +1,56 @@
+---
+title: "Federated Learning, Trusted Third-Party Custody & Differential Privacy"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Federated Learning, Trusted Third-Party Custody & Differential Privacy}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Overview
+
+`dicomtk.fl` enables multi-institutional imaging consortia to collaborate
+without centralising patient-level DICOM or clinical identifiers:
+
+1. **Trusted Third-Party (TTP) & Polymorphic Pseudonymisation (`PEP`)**:
+   `ttp_mainzelliste_client`, `pep_derive_site_token()`, and `pep_rekey_pseudonym()`
+   issue unlinkable project- and site-specific pseudonyms.
+2. **Privacy-Preserving Record Linkage (`PPRL`)**:
+   `pprl_encode_bloom()`, `pprl_dice_similarity()`, and `pprl_link_cohorts()`
+   match patients across hospitals using frequency-hardened Bloom filters.
+3. **Differential Privacy (`DP`) Federated Statistics**:
+   `dp_budget_accountant`, `dp_suppress_small_cells()`, `dp_federated_summary()`,
+   and `dp_aggregate_sites()` release bounded $(\varepsilon, \delta)$-DP cohort
+   summaries while enforcing $k$-anonymity.
+4. **Governed FL Site Package Exports**:
+   `fl_site_approval_gate` and `fl_export_site_package()` require cryptographic
+   `site_admin` sign-off before emitting Flower, NVIDIA FLARE, or OpenFL bundles.
+
+```{r example}
+library(dicomtk.fl)
+
+# 1. TTP + Polymorphic Pseudonymisation
+ttp <- ttp_mainzelliste_client$new(mode = "offline", ttp_secret = "demo-secret")
+sess <- ttp$create_session()
+root_id <- ttp$request_pseudonym(
+  sess$session_id,
+  list(vorname = "Alice", nachname = "Tan", geburtsdatum = "1985-04-12")
+)
+tok_a <- pep_derive_site_token(root_id$pid, "PROJ_A", "SITE_1", "pep-key")
+tok_b <- pep_rekey_pseudonym(tok_a, "PROJ_B", "SITE_2", "pep-key")
+tok_a$pseudonym != tok_b$pseudonym
+
+# 2. DP Federated Summary
+acc <- dp_budget_accountant$new(max_epsilon = 3.0, max_delta = 1e-5)
+set.seed(1)
+s1 <- dp_federated_summary(rnorm(120, 62, 8), lower = 0, upper = 120, accountant = acc, site_id = "SITE_1")
+s2 <- dp_federated_summary(rnorm(150, 65, 8), lower = 0, upper = 120, accountant = acc, site_id = "SITE_2")
+dp_aggregate_sites(list(s1, s2))
+```

@@ -1,0 +1,28 @@
+url: https://lauyeehow1986-hub.github.io/dicomtk.fl
+template:
+  bootstrap: 5
+
+reference:
+  - title: "Trusted Third-Party (TTP) & PEP"
+    contents:
+      - ttp_mainzelliste_client
+      - pep_derive_site_token
+      - pep_rekey_pseudonym
+  - title: "Privacy-Preserving Record Linkage (PPRL)"
+    contents:
+      - pprl_encode_bloom
+      - pprl_dice_similarity
+      - pprl_link_cohorts
+  - title: "Differential Privacy (DP) Federated Statistics"
+    contents:
+      - dp_budget_accountant
+      - dp_suppress_small_cells
+      - dp_laplace_mechanism
+      - dp_gaussian_mechanism
+      - dp_federated_summary
+      - dp_aggregate_sites
+  - title: "Federated Learning Site Exporters & Governance"
+    contents:
+      - fl_site_approval_gate
+      - fl_export_site_package
+      - fl_capabilities
