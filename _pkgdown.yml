@@ -1,19 +1,55 @@
-url: https://lauyeehow1986-hub.github.io/dicomtk.fl
+url: https://lauyeehow1986-hub.github.io/dicomtk.fl/
 template:
   bootstrap: 5
 
+home:
+  links:
+    - text: Install from R-Universe
+      href: https://lauyeehow1986-hub.r-universe.dev
+    - text: dicomtk (Core & WSI)
+      href: https://lauyeehow1986-hub.github.io/dicomtk/
+    - text: dicomtk.ai (AI & Radiomics)
+      href: https://lauyeehow1986-hub.github.io/dicomtk.ai/
+    - text: dicomtk.server (Server & EHR)
+      href: https://lauyeehow1986-hub.github.io/dicomtk.server/
+
+navbar:
+  structure:
+    left: [intro, reference, articles, news, ecosystem]
+    right: [search, github]
+  components:
+    ecosystem:
+      text: Ecosystem
+      menu:
+        - text: "dicomtk (Core & WSI)"
+          href: https://lauyeehow1986-hub.github.io/dicomtk/
+        - text: "dicomtk.ai (AI, Radiomics & NLP)"
+          href: https://lauyeehow1986-hub.github.io/dicomtk.ai/
+        - text: "dicomtk.server (Server, Custody & EHR)"
+          href: https://lauyeehow1986-hub.github.io/dicomtk.server/
+        - text: "dicomtk.fl (Federated Learning & DP)"
+          href: https://lauyeehow1986-hub.github.io/dicomtk.fl/
+        - text: "---"
+        - text: "R-Universe Registry"
+          href: https://lauyeehow1986-hub.r-universe.dev
+
 reference:
   - title: "Trusted Third-Party (TTP) & PEP"
+    desc: "Mainzelliste REST client with offline deterministic mode and AES-256-GCM / HMAC-SHA256 polymorphic pseudonymisation."
     contents:
       - ttp_mainzelliste_client
       - pep_derive_site_token
       - pep_rekey_pseudonym
+
   - title: "Privacy-Preserving Record Linkage (PPRL)"
+    desc: "Frequency-hardened Bloom filters with randomized response bit-flipping, balanced constant-weight padding, and Dice linkage."
     contents:
       - pprl_encode_bloom
       - pprl_dice_similarity
       - pprl_link_cohorts
+
   - title: "Differential Privacy (DP) Federated Statistics"
+    desc: "Formal (epsilon, delta)-DP privacy budget accountant, k-anonymity small-cell suppression, Laplace/Gaussian mechanisms, and federated aggregation."
     contents:
       - dp_budget_accountant
       - dp_suppress_small_cells
@@ -21,7 +57,9 @@ reference:
       - dp_gaussian_mechanism
       - dp_federated_summary
       - dp_aggregate_sites
+
   - title: "Federated Learning Site Exporters & Governance"
+    desc: "Cryptographic site_admin outbound approval gate and ready-to-run site bundles for Flower, NVIDIA FLARE, and OpenFL."
     contents:
       - fl_site_approval_gate
       - fl_export_site_package

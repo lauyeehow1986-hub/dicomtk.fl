@@ -1,4 +1,4 @@
-# dicomtk.fl: Federated Learning, Trusted Third-Party Custody & Differential Privacy
+# dicomtk.fl: Federated Learning, Trusted Third-Party Custody & Differential Privacy <img src="man/figures/logo.png" align="right" height="150" alt="dicomtk.fl hex logo" />
 
 <!-- badges: start -->
 [![R-universe](https://lauyeehow1986-hub.r-universe.dev/badges/:name)](https://lauyeehow1986-hub.r-universe.dev)

@@ -47,6 +47,9 @@ Browse the full reference at
 
 ## Trusted Third-Party (TTP) & PEP
 
+Mainzelliste REST client with offline deterministic mode and AES-256-GCM
+/ HMAC-SHA256 polymorphic pseudonymisation.
+
 - [`ttp_mainzelliste_client`](https://lauyeehow1986-hub.github.io/dicomtk.fl/reference/ttp_mainzelliste_client.md)
   : Trusted Third-Party (TTP) Mainzelliste Client
 - [`pep_derive_site_token()`](https://lauyeehow1986-hub.github.io/dicomtk.fl/reference/pep_derive_site_token.md)
@@ -56,6 +59,9 @@ Browse the full reference at
 
 ## Privacy-Preserving Record Linkage (PPRL)
 
+Frequency-hardened Bloom filters with randomized response bit-flipping,
+balanced constant-weight padding, and Dice linkage.
+
 - [`pprl_encode_bloom()`](https://lauyeehow1986-hub.github.io/dicomtk.fl/reference/pprl_encode_bloom.md)
   : Encode Quasi-Identifiers into a Hardened PPRL Bloom Filter
 - [`pprl_dice_similarity()`](https://lauyeehow1986-hub.github.io/dicomtk.fl/reference/pprl_dice_similarity.md)
@@ -64,6 +70,10 @@ Browse the full reference at
   : Privacy-Preserving Record Linkage Across Two Site Cohorts
 
 ## Differential Privacy (DP) Federated Statistics
+
+Formal (epsilon, delta)-DP privacy budget accountant, k-anonymity
+small-cell suppression, Laplace/Gaussian mechanisms, and federated
+aggregation.
 
 - [`dp_budget_accountant`](https://lauyeehow1986-hub.github.io/dicomtk.fl/reference/dp_budget_accountant.md)
   : Differential Privacy Budget Accountant
@@ -79,6 +89,9 @@ Browse the full reference at
   : Aggregate Differentially Private Site Summaries Across a Federation
 
 ## Federated Learning Site Exporters & Governance
+
+Cryptographic site_admin outbound approval gate and ready-to-run site
+bundles for Flower, NVIDIA FLARE, and OpenFL.
 
 - [`fl_site_approval_gate`](https://lauyeehow1986-hub.github.io/dicomtk.fl/reference/fl_site_approval_gate.md)
   : Cryptographic Site-Admin Outbound Approval Gate
