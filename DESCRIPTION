@@ -1,0 +1,42 @@
+Package: dicomtk.fl
+Title: Federated Learning, Trusted Third-Party Custody, and Differential Privacy for 'DICOM'
+Version: 0.1.0
+Authors@R: c(
+    person("Yee How", "Lau", email = "lauyeehow1986@gmail.com",
+           role = c("aut", "cre", "cph")))
+Description: Federated learning and trusted third-party ('TTP') custody
+    satellite for 'dicomtk'. Provides 'Mainzelliste' REST client integration
+    with offline fallback, polymorphic encryption and pseudonymisation ('PEP')
+    for cross-project unlinkability, hardened Bloom-filter privacy-preserving
+    record linkage ('PPRL') with randomized response bit-flipping and
+    balanced padding, (epsilon, delta)-differential privacy ('DP') federated
+    statistics with a formal privacy budget accountant and minimum-cell
+    k-anonymity suppression, site-package exporters for 'Flower', 'NVIDIA FLARE',
+    and 'OpenFL', and cryptographic 'site_admin' outbound approval gating.
+License: GPL (>= 2)
+URL: https://lauyeehow1986-hub.github.io/dicomtk.fl,
+    https://github.com/lauyeehow1986-hub/dicomtk.fl
+BugReports: https://github.com/lauyeehow1986-hub/dicomtk.fl/issues
+Depends:
+    R (>= 4.1.0)
+Imports:
+    dicomtk (>= 0.6.0),
+    dicomtk.server (>= 1.0.0),
+    R6 (>= 2.5.0),
+    cli (>= 3.6.0),
+    rlang (>= 1.1.0),
+    jsonlite (>= 1.8.0),
+    openssl (>= 2.1.0),
+    httr2 (>= 1.0.0),
+    tibble (>= 3.0.0),
+    stats,
+    utils
+Suggests:
+    testthat (>= 3.0.0),
+    withr,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
