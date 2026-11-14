@@ -20,10 +20,7 @@ BugReports: https://github.com/lauyeehow1986-hub/dicomtk.fl/issues
 Depends:
     R (>= 4.1.0)
 Imports:
-    dicomtk (>= 0.6.0),
-    dicomtk.server (>= 1.0.0),
     R6 (>= 2.5.0),
-    cli (>= 3.6.0),
     rlang (>= 1.1.0),
     jsonlite (>= 1.8.0),
     openssl (>= 2.1.0),
@@ -32,6 +29,8 @@ Imports:
     stats,
     utils
 Suggests:
+    dicomtk (>= 0.6.0),
+    dicomtk.server (>= 1.0.0),
     testthat (>= 3.0.0),
     withr,
     knitr,
